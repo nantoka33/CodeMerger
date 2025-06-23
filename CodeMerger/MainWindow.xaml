@@ -1,0 +1,54 @@
+﻿<Window x:Class="CodeMerger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodeMerger"
+        mc:Ignorable="d"
+        Title="ファイル統合ツール" Height="500" Width="400"
+        Background="#1e1e1e" Foreground="White">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 入力ラベル -->
+            <RowDefinition Height="Auto"/>
+            <!-- 入力欄 -->
+            <RowDefinition Height="Auto"/>
+            <!-- 出力ラベル -->
+            <RowDefinition Height="Auto"/>
+            <!-- 出力欄 -->
+            <RowDefinition Height="Auto"/>
+            <!-- 実行ボタン -->
+            <RowDefinition Height="Auto"/>
+            <!-- ログラベル -->
+            <RowDefinition Height="*"/>
+            <!-- ログ本体 -->
+        </Grid.RowDefinitions>
+
+        <!-- 取込元 -->
+        <TextBlock Text="取込元フォルダパス" Grid.Row="0" Margin="0,5,0,0"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="InputPathTextBox" Width="260" />
+            <Button Content="参照" Width="60" Margin="10,0,0,0" Click="BrowseInput_Click"/>
+        </StackPanel>
+
+        <!-- 出力先 -->
+        <TextBlock Text="出力先フォルダパス" Grid.Row="2" Margin="0,5,0,0"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="OutputPathTextBox" Width="260" />
+            <Button Content="参照" Width="60" Margin="10,0,0,0" Click="BrowseOutput_Click"/>
+        </StackPanel>
+
+        <!-- 実行ボタン -->
+        <Button Grid.Row="4" Content="実行" Width="60"
+                HorizontalAlignment="Left" Background="#3377cc" Foreground="White"
+                Click="Execute_Click" Margin="319,7,0,34" Grid.RowSpan="2" />
+
+        <!-- ログ -->
+        <TextBlock Text="ログ" Grid.Row="5" Margin="0,10,0,301" Grid.RowSpan="2"/>
+        <TextBox x:Name="LogTextBox" Grid.Row="6" Margin="0,5,0,0" 
+                 Background="#252526" Foreground="White"
+                 AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto" FontFamily="Consolas"/>
+    </Grid>
+</Window>

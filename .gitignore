@@ -1,0 +1,49 @@
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+
+# Visual Studio project files
+*.user
+*.suo
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Build artifacts / リリース成果物
+*.zip
+release_temp/
+CodeMerger_ver_*/
+
+# Logs and caches
+*.log
+*.ico
+iconcache/
+
+# Database and caches
+*.db
+*.db-shm
+*.db-wal
+*.dbmdl
+*.cache
+*.vsidx
+*.g.cs
+*.g.i.cs
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.baml
+*.dtbcache.*
+*.doclayout.*
+
+# Others
+Thumbs.db
+Desktop.ini
+# Exclude local release scripts and schedule
+make_release.bat
+pull_push_schedule.json
+recent_projects.json
+config.json
+
+!gitmanager_icon.ico
