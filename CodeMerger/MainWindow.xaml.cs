@@ -11,14 +11,25 @@ namespace CodeMerger
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// property
+        /// </summary>
         private List<string> ExcludeFileNm = new List<string>() { "App.xaml", "App.xaml.cs", "AssemblyInfo.cs" };
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public MainWindow() => InitializeComponent();
 
+        /// <summary>
+        /// 実行ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Execute_Click(object sender, RoutedEventArgs e)
         {
-            string inputDir = InputPathTextBox.Text;
-            string outputDir = OutputPathTextBox.Text;
+            var inputDir = InputPathTextBox.Text;
+            var outputDir = OutputPathTextBox.Text;
 
             if(string.IsNullOrWhiteSpace(inputDir))
             {
@@ -113,6 +124,11 @@ namespace CodeMerger
             LogTextBox.AppendText("出力が完了しました。\n");
         }
 
+        /// <summary>
+        /// 取込元フォルダの参照ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BrowseInput_Click(object sender, RoutedEventArgs e)
         {
             using var dialog = new FolderBrowserDialog();
@@ -123,6 +139,11 @@ namespace CodeMerger
             }
         }
 
+        /// <summary>
+        /// 出力先フォルダの参照ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BrowseOutput_Click(object sender, RoutedEventArgs e)
         {
             using var dialog = new FolderBrowserDialog();
@@ -133,6 +154,11 @@ namespace CodeMerger
             }
         }
 
+        /// <summary>
+        /// 出力先フォルダを開くボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OutputFileOpen_Click(object sender, RoutedEventArgs e)
         {
             var outputPath = OutputPathTextBox.Text;
