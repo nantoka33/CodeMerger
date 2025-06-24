@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -65,7 +66,7 @@ namespace CodeMerger
                 var xamlBuilder = new StringBuilder();
 
                 var files = Directory.GetFiles(dir, "*.*")
-                    .Where(f => (f.EndsWith(".cs") || f.EndsWith(".xaml") || f.EndsWith(".xaml.cs")) &&
+                    .Where(f => (f.EndsWith(".cs") || f.EndsWith(".xaml") || f.EndsWith(".xaml.cs") || f.EndsWith(".vb")) &&
                                 !excludeFiles.Contains(Path.GetFileName(f)))
                     .ToList();
 
@@ -129,6 +130,29 @@ namespace CodeMerger
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 OutputPathTextBox.Text = dialog.SelectedPath;
+            }
+        }
+
+        private void OutputFileOpen_Click(object sender, RoutedEventArgs e)
+        {
+            var outputPath = OutputPathTextBox.Text;
+            if (string.IsNullOrWhiteSpace(outputPath))
+            {
+                LogTextBox.Text = "出力先のフォルダが存在しません。";
+                return;
+            }
+
+            if (Directory.Exists(outputPath))
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = outputPath,
+                    UseShellExecute = true
+                });
+            }
+            else
+            {
+                LogTextBox.Text = "出力先のフォルダが存在しません。";
             }
         }
     }
