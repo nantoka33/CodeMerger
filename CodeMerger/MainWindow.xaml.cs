@@ -75,6 +75,7 @@ namespace CodeMerger
 
                 var csBuilder = new StringBuilder();
                 var xamlBuilder = new StringBuilder();
+                var vbBuilder = new StringBuilder();
 
                 var files = Directory.GetFiles(dir, "*.*")
                     .Where(f => (f.EndsWith(".cs") || f.EndsWith(".xaml") || f.EndsWith(".xaml.cs") || f.EndsWith(".vb")) &&
@@ -104,6 +105,12 @@ namespace CodeMerger
                         csBuilder.AppendLine(content);
                         csBuilder.AppendLine();
                     }
+                    else if (fileName.EndsWith(".vb"))
+                    {
+                        vbBuilder.AppendLine($"// --- {fileName} ---");
+                        vbBuilder.AppendLine(content);
+                        vbBuilder.AppendLine();
+                    }
                 }
 
                 if (csBuilder.Length > 0)
@@ -117,6 +124,13 @@ namespace CodeMerger
                 {
                     var outPath = Path.Combine(outputDir, $"{folderName}_xaml.txt");
                     File.WriteAllText(outPath, xamlBuilder.ToString());
+                    LogTextBox.AppendText($"出力: {outPath}\n");
+                }
+
+                if (vbBuilder.Length > 0)
+                {
+                    var outPath = Path.Combine(outputDir, $"{folderName}_vb.txt");
+                    File.WriteAllText(outPath, vbBuilder.ToString());
                     LogTextBox.AppendText($"出力: {outPath}\n");
                 }
             }
