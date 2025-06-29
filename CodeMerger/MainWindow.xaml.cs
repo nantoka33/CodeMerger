@@ -178,8 +178,8 @@ namespace CodeMerger
             var outputPath = OutputPathTextBox.Text;
             if (string.IsNullOrWhiteSpace(outputPath))
             {
-                LogTextBox.Text = "出力先のフォルダが存在しません。";
-                return;
+                //LogTextBox.Text = "出力先のフォルダが存在しません。";
+                outputPath = @"C:\output_";
             }
 
             if (Directory.Exists(outputPath))
