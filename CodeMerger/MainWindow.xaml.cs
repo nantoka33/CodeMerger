@@ -14,12 +14,18 @@ namespace CodeMerger
         /// <summary>
         /// property
         /// </summary>
-        private List<string> ExcludeFileNm = new List<string>() { "App.xaml", "App.xaml.cs", "AssemblyInfo.cs" };
+        private List<string> ExcludeFileNm = new();
+        private Settings AppSettings;
 
         /// <summary>
         /// 初期化
         /// </summary>
-        public MainWindow() => InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+            AppSettings = SettingsService.Load();
+            ExcludeFileNm = AppSettings.ExcludeFiles;
+        }
 
         /// <summary>
         /// 実行ボタンのクリックイベント
@@ -79,7 +85,7 @@ namespace CodeMerger
 
                 var files = Directory.GetFiles(dir, "*.*")
                     .Where(f => (f.EndsWith(".cs") || f.EndsWith(".xaml") || f.EndsWith(".xaml.cs") || f.EndsWith(".vb")) &&
-                                !excludeFiles.Contains(Path.GetFileName(f)))
+                                !excludeFiles.Any(x => Path.GetFileName(f).Contains(x)))
                     .ToList();
 
                 foreach (var file in files)
@@ -195,5 +201,16 @@ namespace CodeMerger
                 LogTextBox.Text = "出力先のフォルダが存在しません。";
             }
         }
+
+        private void OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow(AppSettings);
+            settingsWindow.ShowDialog();
+
+            // 再読み込み
+            AppSettings = SettingsService.Load();
+            ExcludeFileNm = AppSettings.ExcludeFiles;
+        }
+
     }
 }
