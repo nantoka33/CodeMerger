@@ -74,6 +74,8 @@ namespace CodeMerger
             // 入力ディレクトリ直下も対象に含める
             allDirs.Insert(0, inputDir);
 
+            var allBuilders = new StringBuilder();
+
             foreach (var dir in allDirs)
             {
                 var folderName = Path.GetFileName(dir);
@@ -85,7 +87,7 @@ namespace CodeMerger
 
                 var files = Directory.GetFiles(dir, "*.*")
                     .Where(f => (f.EndsWith(".cs") || f.EndsWith(".xaml") || f.EndsWith(".xaml.cs") || f.EndsWith(".vb")) &&
-                                !excludeFiles.Any(x => Path.GetFileName(f).Contains(x)))
+                                !excludeFiles.Any(x => f.Contains(x)))
                     .ToList();
 
                 foreach (var file in files)
@@ -124,6 +126,8 @@ namespace CodeMerger
                     var outPath = Path.Combine(outputDir, $"{folderName}_cs.txt");
                     File.WriteAllText(outPath, csBuilder.ToString());
                     LogTextBox.AppendText($"出力: {outPath}\n");
+
+                    allBuilders.Append(csBuilder);
                 }
 
                 if (xamlBuilder.Length > 0)
@@ -131,6 +135,8 @@ namespace CodeMerger
                     var outPath = Path.Combine(outputDir, $"{folderName}_xaml.txt");
                     File.WriteAllText(outPath, xamlBuilder.ToString());
                     LogTextBox.AppendText($"出力: {outPath}\n");
+
+                    allBuilders.Append(xamlBuilder);
                 }
 
                 if (vbBuilder.Length > 0)
@@ -138,9 +144,18 @@ namespace CodeMerger
                     var outPath = Path.Combine(outputDir, $"{folderName}_vb.txt");
                     File.WriteAllText(outPath, vbBuilder.ToString());
                     LogTextBox.AppendText($"出力: {outPath}\n");
+
+                    allBuilders.Append(vbBuilder);
                 }
+
             }
 
+            if (allBuilders.Length > 0)
+            {
+                var outPath = Path.Combine(outputDir, $"all.txt");
+                File.WriteAllText(outPath, allBuilders.ToString());
+                LogTextBox.AppendText($"出力: {outPath}\n");
+            }
             LogTextBox.AppendText("出力が完了しました。\n");
         }
 
